@@ -1,0 +1,17 @@
+########################################################################################################################
+# ArgoCD Bootstrap ConfigMap variables
+########################################################################################################################
+ARGOCD_CDE_ROLE_SSM_TEMPLATE=/amehrotra-primary/pcpt/config/k8s-config/accounts/{env}/argo/role/arn
+ARGOCD_CDE_URL_SSM_TEMPLATE=/amehrotra-primary/pcpt/config/k8s-config/accounts/{env}/cluster/private-link/cname
+CLUSTER_STATE_REPO_BRANCH=dev
+CUSTOMER_SSO_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/customer/sso
+TENANT_NAME=amehrotra-primary
+########################################################################################################################
+
+########################################################################################################################
+# Per-CDE environment variables - Add CUSTOMER_HUB_/DEV_/TEST_/STAGE_/PROD_ prefixes as necessary
+# to override SLACK_CHANNEL.
+# See https://pingidentity.atlassian.net/l/cp/0KtvCPei for more info
+########################################################################################################################
+DEFAULT_SLACK_CHANNEL=nowhere
+########################################################################################################################

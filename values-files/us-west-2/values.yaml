@@ -1,0 +1,23 @@
+########################################################################################################################
+# Customer region-specific parameters that are shared by multiple apps
+########################################################################################################################
+
+global:
+  # region is the AWS region name
+  region: "us-west-2"
+  regionNickname: "us-west-2"
+
+  # The name of the tenant
+  tenantName: "amehrotra-primary"
+
+  # tenantDomain is the domain suffix for customer for region
+  tenantDomain: "amehrotra-primary.ping-demo.com"
+
+  # dnsZone is the Customer-specific region DNS zone
+  dnsZone: "amehrotra-primary.ping-demo.com"
+
+  # irsaPingAnnotationKeyValue is the IAM roles for service accounts
+  irsaPingAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ping-role"
+
+  # Customer-specific artifacts URL for region
+  artifactRepoUrl: "s3://amehrotra-primary-pingbinary-bucket"
