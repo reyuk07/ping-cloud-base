@@ -1,0 +1,16 @@
+cloudwatch:
+  enabled: true
+# The IRSA role ARN to be used for the CWAgent serviceAccount, for the customer environment
+# Override this value manually to deploy the helm chart individually for development.
+  irsaCwAgentAnnotationKeyValue: ""
+  image:
+    repository: public.ecr.aws/r2h3l6e4/pingcloud-clustertools/amazon/cloudwatch-agent
+    tag: 1.300026.3b189
+
+  resources:
+    limits:
+      cpu:  200m
+      memory: 200Mi
+    requests:
+      cpu: 200m
+      memory: 200Mi
