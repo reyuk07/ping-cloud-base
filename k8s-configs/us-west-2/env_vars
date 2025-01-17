@@ -38,18 +38,18 @@ DNS_ZONE=${TENANT_DOMAIN}
 # IRSA - IAM role for service accounts
 ############################################################
 # Used by ping product pods
-IRSA_PING_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ping-role"
-IRSA_PA_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-pingaccess"
-IRSA_PF_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-pingfederate"
-IRSA_SS_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-self-service"
+IRSA_PING_ANNOTATION_KEY_VALUE=""
+IRSA_PA_ANNOTATION_KEY_VALUE=""
+IRSA_PF_ANNOTATION_KEY_VALUE=""
+IRSA_SS_ANNOTATION_KEY_VALUE=""
 # Used by cluster-tool pods
-IRSA_ARGOCD_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-argocd"
-IRSA_CWAGENT_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-cloudwatch"
-IRSA_LOGSTASH_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-logstash"
-IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-opensearch"
-IRSA_INGRESS_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ingress"
-IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-cert-manager"
-IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-external-dns"
+IRSA_ARGOCD_ANNOTATION_KEY_VALUE=""
+IRSA_CWAGENT_ANNOTATION_KEY_VALUE=""
+IRSA_LOGSTASH_ANNOTATION_KEY_VALUE=""
+IRSA_OPENSEARCH_ANNOTATION_KEY_VALUE=""
+IRSA_INGRESS_ANNOTATION_KEY_VALUE=""
+IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE=""
+IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE=""
 # Used by cert-manager to access Global Dns
 GLOBAL_DNS_IAM_ROLE=""
 
@@ -57,8 +57,8 @@ GLOBAL_DNS_IAM_ROLE=""
 NLB_NGX_PUBLIC_ANNOTATION_KEY_VALUE=""
 
 # Used by Karpenter
-KARPENTER_ROLE_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-KarpenterControllerRole"
-CLUSTER_ENDPOINT="https://B85D7064BC95DC1AEF7537FD1335C1C9.gr7.us-west-2.eks.amazonaws.com"
+KARPENTER_ROLE_ANNOTATION_KEY_VALUE=""
+CLUSTER_ENDPOINT=""
 KARPENTER_INSTANCE_PROFILE="amehrotra-primary-KarpenterInstanceProfile"
 
 #Teleport variables

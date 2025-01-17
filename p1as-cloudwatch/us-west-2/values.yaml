@@ -1,8 +1,7 @@
 cloudwatch:
-  enabled: true
 # The IRSA role ARN to be used for the CWAgent serviceAccount, for the customer environment
-# Override this value manually to deploy the helm chart individually for development.
-  irsaCwAgentAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-cloudwatch"
+  irsaCwAgentAnnotationKeyValue: ""
+  isGA: true
   image:
     repository: public.ecr.aws/r2h3l6e4/pingcloud-clustertools/amazon/cloudwatch-agent
     tag: 1.300026.3b189
