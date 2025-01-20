@@ -4,4 +4,4 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cloudwatch-agent-custom-placeholder-base
+  name: o11y-custom-placeholder
