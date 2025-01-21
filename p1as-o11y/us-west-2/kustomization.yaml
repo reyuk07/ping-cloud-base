@@ -11,19 +11,22 @@ helmCharts:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
       - values.yaml   # app specific values.yaml
-    version: v2.1-release-branch-latest
+    version: PDO-8168-spike-subchart-ns
     repo: oci://public.ecr.aws/r2h3l6e4/dev
     namespace: amazon-cloudwatch
     
 ### This field is used to trigger a resync of the helm chart ###
 configMapGenerator:
-  - name: last-update-reason
+  - name: o11y-last-update-reason
+    namespace: default
     literals:
       - UPDATE_REASON=""
   ### This is needed for the empty custom-patches.yaml file to work ###
   - name: o11y-custom-placeholder
+    namespace: default
   ### This is needed for the empty custom-patches.yaml file to work in base folder ###
-  - name: o11y-custom-placeholder-base      
+  - name: o11y-custom-placeholder-base  
+    namespace: default 
 
 patchesStrategicMerge:
   ### PS/GSO customizations to OOTB resources should only go into this file. Otherwise, CSR auto-updates will break. ###
