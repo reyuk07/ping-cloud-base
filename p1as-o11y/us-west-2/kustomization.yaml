@@ -21,9 +21,9 @@ configMapGenerator:
     literals:
       - UPDATE_REASON=""
   ### This is needed for the empty custom-patches.yaml file to work ###
-  - name: cloudwatch-agent-custom-placeholder
+  - name: o11y-custom-placeholder
   ### This is needed for the empty custom-patches.yaml file to work in base folder ###
-  - name: cloudwatch-agent-custom-placeholder-base      
+  - name: o11y-custom-placeholder-base      
 
 patchesStrategicMerge:
   ### PS/GSO customizations to OOTB resources should only go into this file. Otherwise, CSR auto-updates will break. ###
