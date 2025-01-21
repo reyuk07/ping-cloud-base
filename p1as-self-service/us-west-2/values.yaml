@@ -1,7 +1,7 @@
 # p1as-self-service application settings
 selfService:
   # The IRSA role ARN to be used for the ping serviceAccount
-  irsaSsAnnotationKeyValue: ""
+  irsaSsAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-self-service"
   # Customization for p1as-self-service ingress resource
   ingress:
   # Customization for p1as-self-service service resource
