@@ -11,7 +11,7 @@ helmCharts:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
       - values.yaml   # app specific values.yaml
-    version: PDO-8168-spike-subchart-ns
+    version: PDO-5995-CW
     repo: oci://public.ecr.aws/r2h3l6e4/dev
     namespace: amazon-cloudwatch
     
