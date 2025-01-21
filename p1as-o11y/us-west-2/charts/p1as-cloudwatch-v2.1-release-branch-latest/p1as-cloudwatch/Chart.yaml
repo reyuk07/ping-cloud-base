@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: v2.1-release-branch-latest
+description: A Helm chart for the p1as cloudwatch
+name: p1as-cloudwatch
+type: application
+version: v2.1-release-branch-latest

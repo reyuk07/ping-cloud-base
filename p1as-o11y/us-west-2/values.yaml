@@ -1,7 +1,7 @@
 #Cloudwatch related values
 cloudwatch:
   enabled : "${CLOUDWATCH_ENABLED}"
-  namespace: "amazon-cloudwatch"
+  namespace: amazon-cloudwatch
 #The IRSA role ARN to be used for the CWAgent serviceAccount, for the customer environment
   irsaCwAgentAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-cloudwatch"
   image:

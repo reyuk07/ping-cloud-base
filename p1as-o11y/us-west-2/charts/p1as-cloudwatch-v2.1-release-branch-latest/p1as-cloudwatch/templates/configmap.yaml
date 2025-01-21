@@ -1,0 +1,11 @@
+{{- if .Values.cloudwatch.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cwagentconfig
+data:
+  cwagentconfig.json: |-
+{{ tpl (.Files.Get "files/cwagentconfig.json") . | indent 4 }}
+  prometheus.yaml: |-
+{{ tpl (.Files.Get "files/prometheus.yaml") . | indent 4 }}
+{{- end }}
