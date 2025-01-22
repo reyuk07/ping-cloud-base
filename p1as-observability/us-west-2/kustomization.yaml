@@ -12,11 +12,11 @@ helmCharts:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
       - values.yaml   # app specific values.yaml
-    version: PDO-5995-PDO-5995-CW
+    version: v2.1-PDO-5995-PDO-5995-CW
     namespace: amazon-cloudwatch
     valuesInline:
       ecrRegistryName: "705370621539.dkr.ecr.us-west-2.amazonaws.com/dev"
-      profileBranch: PDO-5995-PDO-5995-CW
+      profileBranch: v2.1-PDO-5995-PDO-5995-CW
     repo: oci://705370621539.dkr.ecr.us-west-2.amazonaws.com/dev
     
 ### This field is used to trigger a resync of the helm chart ###
