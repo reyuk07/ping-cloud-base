@@ -1,13 +1,13 @@
 kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 
-helmGlobals:
-  configHome: charts
-
 resources:
   - ../base/custom-resources
   - custom-resources
   - ../base/namespace.yaml
+
+helmGlobals:
+  configHome: /helm-working-dir
 
 helmCharts:
   - name: p1as-cloudwatch
