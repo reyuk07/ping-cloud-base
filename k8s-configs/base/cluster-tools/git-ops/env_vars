@@ -13,5 +13,5 @@ TENANT_NAME=amehrotra-primary
 # to override SLACK_CHANNEL.
 # See https://pingidentity.atlassian.net/l/cp/0KtvCPei for more info
 ########################################################################################################################
-DEFAULT_SLACK_CHANNEL=p1as-application-oncall
+DEFAULT_SLACK_CHANNEL=nowhere
 ########################################################################################################################

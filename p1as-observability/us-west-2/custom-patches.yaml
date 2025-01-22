@@ -4,4 +4,5 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: o11y-custom-placeholder-base
+  name: observability-custom-placeholder
+  namespace: ping-cloud
