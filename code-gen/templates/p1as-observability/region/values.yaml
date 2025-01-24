@@ -1,6 +1,6 @@
 #Cloudwatch related values
 cloudwatch:
-  enabled : "${CLOUDWATCH_ENABLED}"
+  enabled : ${CLOUDWATCH_ENABLED}
 #The IRSA role ARN to be used for the CWAgent serviceAccount, for the customer environment
   irsaCwAgentAnnotationKeyValue: "${IRSA_CWAGENT_ANNOTATION_KEY_VALUE}"
   image:
