@@ -12,6 +12,7 @@ resources:
 
 helmCharts:
   - name: p1as-self-service
+    namespace: ping-cloud
     additionalValuesFiles:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
