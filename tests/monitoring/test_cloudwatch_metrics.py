@@ -1,9 +1,36 @@
+import subprocess
 import unittest
 import os
 import json
 import boto3
 from datetime import datetime, timedelta
 
+
+def install_prometheus(namespace="prometheus", release_name="prometheus", repo_name="prometheus-community", chart_name="kube-prometheus-stack"):
+    try:
+        subprocess.run(["helm", "repo", "add", repo_name, "https://prometheus-community.github.io/helm-charts"], check=True)
+        subprocess.run(["helm", "repo", "update"], check=True)
+        subprocess.run(["kubectl", "create", "namespace", namespace], check=False)
+        subprocess.run([
+            "helm", "upgrade", "--install", release_name, f"{repo_name}/{chart_name}", 
+            "--namespace", namespace, "--set", "prometheus.service.type=NodePort"
+        ], check=True)
+        print("Prometheus installation successful!")
+    except subprocess.CalledProcessError as e:
+        print(f"Error during installation: {e}")
+
+def is_prometheus_running(namespace="prometheus"):
+    result = subprocess.run(["kubectl", "get", "pods", "-n", namespace, "-l", "app=prometheus"], capture_output=True, text=True)
+    return "Running" in result.stdout
+
+def ensure_prometheus():
+    if not is_prometheus_running():
+        print("Prometheus is not running. Installing...")
+        install_prometheus()
+    else:
+        print("Prometheus is already running.")
+
+ensure_prometheus()
 
 class TestCloudWatchLogs(unittest.TestCase):
     aws_region = os.environ.get("AWS_REGION", "us-west-2")
