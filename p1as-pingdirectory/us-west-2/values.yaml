@@ -15,7 +15,7 @@ pingdirectory:
   # Set false to avoid skipping liveness probe. Skipping the liveness (SKIP_LIVENESS=true) is the default for PingDirectory.
   skipLiveness: true
   # The IRSA role ARN to be used for the PingDirectory serviceAccount
-  irsaPdAnnotationKeyValue: ""
+  irsaPdAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-pingdirectory"
 
   # Customization for pingdirectory ingress resource
   ingress:
@@ -48,3 +48,7 @@ pingdirectory:
   pdUseSharedCache: "false"
   # Set this to define overall cache size .This would to be shared across all local backends
   sharedCachePercent: "55"
+  license:
+    # Only use if you want to provide your own SSM path to perpetual license
+    # The default is that automation will determine SSM path to retrieve product license
+    overrideProductLicense: ""
