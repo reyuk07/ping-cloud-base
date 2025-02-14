@@ -1,10 +1,7 @@
 # Update this environment variable to trigger updates to the PF servers
-LAST_UPDATE_REASON="NA"
+LAST_UPDATE_REASON="v2.1-release-branch-upgrade"
 
 SERVER_PROFILE_PATH=profiles/pingfederate
-
-# Set to true to skip liveness probe.
-SKIP_LIVENESS=false
 
 # The following will set PingFederate the minimum and the maximum
 # number of threads used to configure PingFederate thread pools within run.properties.
