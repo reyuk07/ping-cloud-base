@@ -47,7 +47,7 @@ PGO_BACKUP_BUCKET_NAME=amehrotra-primary-pgo-bucket
 ############################################################
 # Platform event queue and SSM variables
 ############################################################
-PLATFORM_EVENT_QUEUE_NAME=v2_platform_event_queue.fifo
+PLATFORM_EVENT_QUEUE_NAME=amehrotra_primary_platform_event_queue.fifo
 PLATFORM_EVENT_QUEUE_POLL_BATCH_SIZE=1
 PLATFORM_EVENT_QUEUE_POLL_INTERVAL_SECONDS=2
 CUSTOMER_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/customer
@@ -78,7 +78,7 @@ PING_CLOUD_NAMESPACE=ping-cloud
 
 # The ping-cloud-base git URL and branch for base Kubernetes manifests
 K8S_GIT_URL=https://github.com/reyuk07/ping-cloud-base.git
-K8S_GIT_BRANCH=v2.1-release-branch
+K8S_GIT_BRANCH=v2.1-non-cw-helm
 
 # The name of the Docker image registry
 ECR_REGISTRY_NAME=public.ecr.aws/r2h3l6e4
@@ -86,14 +86,14 @@ ECR_REGISTRY_NAME=public.ecr.aws/r2h3l6e4
 ############################################################
 # Server profile variables
 ############################################################
-SERVER_PROFILE_URL=ssh://APKA2IO25QZR5RKID5ET@git-codecommit.us-west-2.amazonaws.com/v1/repos/profile-repo
-SERVER_PROFILE_BRANCH=dev
+SERVER_PROFILE_URL=ssh://APKA2IO25QZR5RKID5ET@git-codecommit.us-west-2.amazonaws.com/v1/repos/amehrotra-primary-profile-repo
+SERVER_PROFILE_BRANCH=${CLUSTER_STATE_REPO_BRANCH}
 
 ############################################################
 # Environment-specific variables
 ############################################################
 # Used by server profile hooks
-ENVIRONMENT_TYPE=dev
+ENVIRONMENT_TYPE=${ENV}
 
 # Used by Kubernetes manifests
 ENV=dev
@@ -132,7 +132,7 @@ PF_MAX_YGEN=768m
 
 # This variable's value will make it onto the branding for the PF admin console and
 # will include the name of the environment and the region where it's deployed.
-PF_ADMIN_CONSOLE_ENVIRONMENT=dev-us-west-2
+PF_ADMIN_CONSOLE_ENVIRONMENT=${ENV}-${REGION}
 
 ############################################################
 # PingAccess variables for environment
@@ -152,8 +152,8 @@ PA_GCOPTION=-XX:+UseParallelGC
 ############################################################
 # DevOps License environment variables
 ############################################################
-PING_IDENTITY_DEVOPS_USER=ssm://pcpt/devops-license/user
-PING_IDENTITY_DEVOPS_KEY=ssm://pcpt/devops-license/key
+PING_IDENTITY_DEVOPS_USER=amehrotra@pingidentity.com
+PING_IDENTITY_DEVOPS_KEY=e94a63f3-6d8c-1c0f-848f-2aa79ec482c0
 
 ############################################################
 # Ping application image tags
@@ -186,42 +186,42 @@ CLUSTER_NAME_LC=amehrotra-primary
 ############################################################
 # Primary DNS zone
 ############################################################
-PRIMARY_DNS_ZONE=amehrotra-primary.ping-demo.com
+PRIMARY_DNS_ZONE=${PRIMARY_TENANT_DOMAIN}
 
 ############################################################
 # Public hostnames
 ############################################################
 # Ping admin configuration required for admin access and clustering
-PF_ADMIN_PUBLIC_HOSTNAME=pingfederate-admin.${PRIMARY_TENANT_DOMAIN}
-PF_ADMIN_API_PUBLIC_HOSTNAME=pingfederate-admin-api.${PRIMARY_TENANT_DOMAIN}
-PA_ADMIN_PUBLIC_HOSTNAME=pingaccess-admin.${PRIMARY_TENANT_DOMAIN}
-PA_ADMIN_API_PUBLIC_HOSTNAME=pingaccess-admin-api.${PRIMARY_TENANT_DOMAIN}
-PA_WAS_ADMIN_PUBLIC_HOSTNAME=pingaccess-was-admin.${PRIMARY_TENANT_DOMAIN}
-PC_ADMIN_PUBLIC_HOSTNAME=pingcentral-admin.${PRIMARY_TENANT_DOMAIN}
-PC_ADMIN_PRIVATE_SITE_HOSTNAME=pingcentral.amehrotra-primary.ping-demo.com
+PF_ADMIN_PUBLIC_HOSTNAME=pingfederate-admin.${PRIMARY_DNS_ZONE}
+PF_ADMIN_API_PUBLIC_HOSTNAME=pingfederate-admin-api.${PRIMARY_DNS_ZONE}
+PA_ADMIN_PUBLIC_HOSTNAME=pingaccess-admin.${PRIMARY_DNS_ZONE}
+PA_ADMIN_API_PUBLIC_HOSTNAME=pingaccess-admin-api.${PRIMARY_DNS_ZONE}
+PA_WAS_ADMIN_PUBLIC_HOSTNAME=pingaccess-was-admin.${PRIMARY_DNS_ZONE}
+PC_ADMIN_PUBLIC_HOSTNAME=pingcentral-admin.${PRIMARY_DNS_ZONE}
+PC_ADMIN_PRIVATE_SITE_HOSTNAME=pingcentral.${PRIMARY_TENANT_DOMAIN}
 
-PD_CLUSTER_PUBLIC_HOSTNAME=pingdirectory-cluster.${PRIMARY_TENANT_DOMAIN}
-PF_CLUSTER_PUBLIC_HOSTNAME=pingfederate-cluster.${PRIMARY_TENANT_DOMAIN}
-PA_CLUSTER_PUBLIC_HOSTNAME=pingaccess-cluster.${PRIMARY_TENANT_DOMAIN}
-PA_WAS_CLUSTER_PUBLIC_HOSTNAME=pingaccess-was-cluster.${PRIMARY_TENANT_DOMAIN}
+PD_CLUSTER_PUBLIC_HOSTNAME=pingdirectory-cluster.${PRIMARY_DNS_ZONE}
+PF_CLUSTER_PUBLIC_HOSTNAME=pingfederate-cluster.${PRIMARY_DNS_ZONE}
+PA_CLUSTER_PUBLIC_HOSTNAME=pingaccess-cluster.${PRIMARY_DNS_ZONE}
+PA_WAS_CLUSTER_PUBLIC_HOSTNAME=pingaccess-was-cluster.${PRIMARY_DNS_ZONE}
 
 # Ping engine hostname variables
-PD_PUBLIC_HOSTNAME=pingdirectory-admin.${TENANT_DOMAIN}
-PD_HTTP_PUBLIC_HOSTNAME=pingdirectory.${TENANT_DOMAIN}
-PD_DELEGATOR_PUBLIC_HOSTNAME=pingdelegator.${TENANT_DOMAIN}
+PD_PUBLIC_HOSTNAME=pingdirectory-admin.${DNS_ZONE}
+PD_HTTP_PUBLIC_HOSTNAME=pingdirectory.${DNS_ZONE}
+PD_DELEGATOR_PUBLIC_HOSTNAME=pingdelegator.${DNS_ZONE}
 PD_DELEGATOR_PUBLIC_PORT=443
-PF_ENGINE_PUBLIC_HOSTNAME=pingfederate.${TENANT_DOMAIN}
-PA_ENGINE_PUBLIC_HOSTNAME=pingaccess.${TENANT_DOMAIN}
-PA_WAS_ENGINE_PUBLIC_HOSTNAME=pingaccess-was.${TENANT_DOMAIN}
+PF_ENGINE_PUBLIC_HOSTNAME=pingfederate.${DNS_ZONE}
+PA_ENGINE_PUBLIC_HOSTNAME=pingaccess.${DNS_ZONE}
+PA_WAS_ENGINE_PUBLIC_HOSTNAME=pingaccess-was.${DNS_ZONE}
 
-PROMETHEUS_PUBLIC_HOSTNAME=prometheus.${TENANT_DOMAIN}
-GRAFANA_PUBLIC_HOSTNAME=monitoring.${TENANT_DOMAIN}
-OSD_PUBLIC_HOSTNAME=logs.${TENANT_DOMAIN}
-ARGOCD_PUBLIC_HOSTNAME=argocd.${TENANT_DOMAIN}
-SELF_SERVICE_PUBLIC_HOSTNAME=self-service-api.${PRIMARY_TENANT_DOMAIN}
+PROMETHEUS_PUBLIC_HOSTNAME=prometheus.${DNS_ZONE}
+GRAFANA_PUBLIC_HOSTNAME=monitoring.${DNS_ZONE}
+OSD_PUBLIC_HOSTNAME=logs.${DNS_ZONE}
+ARGOCD_PUBLIC_HOSTNAME=argocd.${DNS_ZONE}
+SELF_SERVICE_PUBLIC_HOSTNAME=self-service-api.${PRIMARY_DNS_ZONE}
 
-HEALTHCHECK_HTTPBIN_PA_WAS_PUBLIC_HOSTNAME=healthcheck-httpbin-pa-was.${PRIMARY_TENANT_DOMAIN}
-HEALTHCHECK_HTTPBIN_PA_PUBLIC_HOSTNAME=healthcheck-httpbin-pa.${PRIMARY_TENANT_DOMAIN}
+HEALTHCHECK_HTTPBIN_PA_WAS_PUBLIC_HOSTNAME=healthcheck-httpbin-pa-was.${PRIMARY_DNS_ZONE}
+HEALTHCHECK_HTTPBIN_PA_PUBLIC_HOSTNAME=healthcheck-httpbin-pa.${PRIMARY_DNS_ZONE}
 
 # Retention time for Prometheus. Could be set in years(y), weeks(w), days(d), hours(h), minutes(m) or seconds(s)
 PROMETHEUS_RETENTION_TIME=15d
