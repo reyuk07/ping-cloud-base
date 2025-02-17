@@ -1,5 +1,5 @@
 # Update this environment variable to trigger updates to the Ping Data Sync servers
-LAST_UPDATE_REASON="NA"
+LAST_UPDATE_REASON="v2.1-release-branch-upgrade"
 
 SERVER_PROFILE_PATH=profiles/pingdatasync
 
