@@ -15,7 +15,7 @@ pingdirectory:
   # Set false to avoid skipping liveness probe. Skipping the liveness (SKIP_LIVENESS=true) is the default for PingDirectory.
   skipLiveness: true
   # The IRSA role ARN to be used for the PingDirectory serviceAccount
-  irsaPdAnnotationKeyValue: ""
+  irsaPdAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-pingdirectory"
 
   # Customization for pingdirectory ingress resource
   ingress:
