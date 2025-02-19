@@ -20,16 +20,19 @@ STAGE=lab
 # This variable's value will be used as the prefix to distinguish between worker apps for different CDEs for a
 # single P14C customer. All of these apps will be created within the "Administrators" environment in the tenant.
 # This variable name is also used in forming the Signal Science Agent name as displayed in SigSci Dashboard.
-ENVIRONMENT_PREFIX=amehrotra-primary-${REGION_ENV}-us-west-2
+ENVIRONMENT_PREFIX=${TENANT_NAME}-${REGION_ENV}-${REGION_NICK_NAME}
+
+# The name of the environment as it will appear on the NewRelic console.
+NEW_RELIC_ENVIRONMENT_NAME=${TENANT_NAME}_${REGION_ENV}_${REGION_NICK_NAME}_k8s-cluster
 
 # Customer-specific artifacts URL for region
 ARTIFACT_REPO_URL=s3://amehrotra-primary-pingbinary-bucket
 
 # Customer-specific region name
-CLUSTER_STATE_REPO_PATH=us-west-2
+CLUSTER_STATE_REPO_PATH=${REGION_NICK_NAME}
 
 # Customer-specific region DNS zone
-DNS_ZONE=amehrotra-primary.ping-demo.com
+DNS_ZONE=${TENANT_DOMAIN}
 
 ############################################################
 # IRSA - IAM role for service accounts
