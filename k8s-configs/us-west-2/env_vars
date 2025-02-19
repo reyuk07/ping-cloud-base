@@ -22,6 +22,9 @@ STAGE=lab
 # This variable name is also used in forming the Signal Science Agent name as displayed in SigSci Dashboard.
 ENVIRONMENT_PREFIX=${TENANT_NAME}-${REGION_ENV}-${REGION_NICK_NAME}
 
+# The name of the environment as it will appear on the NewRelic console.
+NEW_RELIC_ENVIRONMENT_NAME=${TENANT_NAME}_${REGION_ENV}_${REGION_NICK_NAME}_k8s-cluster
+
 # Customer-specific artifacts URL for region
 ARTIFACT_REPO_URL=s3://amehrotra-primary-pingbinary-bucket
 
