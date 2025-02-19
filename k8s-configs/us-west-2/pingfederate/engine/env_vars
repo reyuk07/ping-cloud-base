@@ -1,5 +1,5 @@
 # Update this environment variable to trigger updates to the PF servers
-LAST_UPDATE_REASON="v2.1-release-branch-upgrade"
+LAST_UPDATE_REASON="NA"
 
 SERVER_PROFILE_PATH=profiles/pingfederate
 
