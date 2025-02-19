@@ -14,3 +14,8 @@ cloudwatch:
     requests:
       cpu: 200m
       memory: 200Mi
+
+
+#Newrelic related values
+global:
+  cluster: amehrotra-primary_dev_us-west-2_k8s-cluster
