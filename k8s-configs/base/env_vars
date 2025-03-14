@@ -284,6 +284,6 @@ PINGFEDERATE_HEALTHCHECK_SCHEDULE="* * * * *"
 CERT_RENEW_BEFORE=720h0m0s
 
 # Variable to set the default cluster resource uptime/working hours
-DEFAULT_CLUSTER_UPTIME="Mon-Fri 10:00-01:00 Asia/Kolkata"
+DEFAULT_CLUSTER_UPTIME="Mon-Fri 10:00-23:30 Asia/Kolkata"
 
 IS_BELUGA_ENV=true
