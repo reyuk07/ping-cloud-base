@@ -121,7 +121,7 @@ global:
   pingCloudNamespace: "ping-cloud"
 
   # k8sGitBranch is the ping-cloud-base git branch for base Kubernetes manifests
-  k8sGitBranch: "v2.1-release-branch"
+  k8sGitBranch: "PDO-8803"
 
   # ecrRegistryName is the name of the Docker image registry
   ecrRegistryName: "public.ecr.aws/r2h3l6e4/dev"
@@ -174,7 +174,6 @@ global:
   #   us-east-2:
   #     hostname: def
   #     replicas: 2
-  # WARNING: You need to remove any trailing whitespace from all lines in this value, as well as any quotes
   descriptorFile: ""
   # PingDirectory base DN
   userBaseDn: "dc=example,dc=com"
@@ -206,7 +205,7 @@ global:
   external_ingress_enabled: 
 
   # Runbook: https://pingidentity.atlassian.net/wiki/spaces/PDA/pages/427688292/How+to+Enable+and+Disable+Healthchecks+-+1.19.0
-  healthchecksEnabled: false
+  healthchecksEnabled: true
   #####################################################################################################################
 
   ########################################################
