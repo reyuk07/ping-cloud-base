@@ -7,20 +7,15 @@ resources:
   - ../base/custom-resources
   - custom-resources
 
-helmGlobals:
-  configHome: /helm-working-dir
-
 helmCharts:
   - name: p1as-beluga-tools
     additionalValuesFiles:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
       - values.yaml   # app specific values.yaml
-    version: v2.1-PDO-8803-metadata
-    # repo: oci://public.ecr.aws/r2h3l6e4/dev
-    valuesInline:
-      ecrRegistryName: "705370621539.dkr.ecr.us-west-2.amazonaws.com/dev"
-    repo: oci://705370621539.dkr.ecr.us-west-2.amazonaws.com/dev
+    version: v2.1-release-branch-latest
+    repo: oci://public.ecr.aws/r2h3l6e4/dev
+
 ### This field is used to trigger a resync of the p1as-beluga-tools helm chart ###
 configMapGenerator:
   - name: beluga-tools-last-update-reason
