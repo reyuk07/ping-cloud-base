@@ -4,7 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 namespace: ping-cloud
 
 resources:
-  - ../base
+  - ../base/custom-resources
   - custom-resources
 
 helmCharts:
@@ -13,15 +13,20 @@ helmCharts:
       - ../../values-files/base/values.yaml   # base values.yaml
       - ../../values-files/us-west-2/values.yaml   # regional values.yaml
       - values.yaml   # app specific values.yaml
-    version: v1.19-release-branch-latest
-    repo: oci://public.ecr.aws/r2h3l6e4/dev/p1as-beluga-tools
-
+    version: v2.2-release-branch-latest
+    repo: oci://public.ecr.aws/r2h3l6e4/dev
+    
 ### This field is used to trigger a resync of the p1as-beluga-tools helm chart ###
 configMapGenerator:
-  - name: last-update-reason
+  - name: beluga-tools-last-update-reason
     literals:
       - UPDATE_REASON=""
+  ### This is needed for the empty custom-patches.yaml file to work ###
+  - name: beluga-tools-custom-placeholder
+  ### This is needed for the empty custom-patches.yaml file to work in base folder ###
+  - name: beluga-tools-custom-placeholder-base      
 
 patchesStrategicMerge:
   ### PS/GSO customizations to OOTB resources should only go into this file. Otherwise, CSR auto-updates will break. ###
   - custom-patches.yaml
+  - ../base/custom-patches.yaml
