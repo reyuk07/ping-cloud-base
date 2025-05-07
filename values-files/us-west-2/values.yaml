@@ -21,3 +21,10 @@ global:
 
   # Customer-specific artifacts URL for region
   artifactRepoUrl: "s3://amehrotra-primary-pingbinary-bucket"
+
+  ########################################################
+  # Public Hostnames
+  ########################################################
+  pdHttpPublicHostname: "pingdirectory.amehrotra-primary.ping-demo.com"
+  pdDelegatorPublicHostname: "pingdelegator.amehrotra-primary.ping-demo.com"
+  pfEnginePublicHostname: "pingfederate.amehrotra-primary.ping-demo.com"
