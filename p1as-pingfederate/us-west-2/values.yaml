@@ -114,7 +114,7 @@ pingfederate:
           bucket: amehrotra-primary-pgo-bucket
         schedules:
           full: "0 0 * * *"
-          differential: "30 */6 * * *"
+          differential: "30 */6 * * *"  
     # Control the StorageClass settings of PostgresCluster.
     persistentVolume:
       storage: 20Gi

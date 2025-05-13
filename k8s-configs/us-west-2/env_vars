@@ -48,7 +48,6 @@ IRSA_CERT_MANAGER_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam:
 IRSA_EXTERNAL_DNS_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-external-dns"
 # Used by cert-manager to access Global Dns
 GLOBAL_DNS_IAM_ROLE=""
-IRSA_CLUSTER_AUTOSCALER_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-cluster-autoscaler"
 
 # Annotation used by ingress-nginx service in ingress-nginx-public namespace
 NLB_NGX_PUBLIC_ANNOTATION_KEY_VALUE=""
