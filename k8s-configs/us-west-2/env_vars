@@ -36,6 +36,7 @@ DNS_ZONE=${TENANT_DOMAIN}
 ############################################################
 # Used by ping product pods
 IRSA_PING_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ping-role"
+IRSA_BOOTSTRAP_ANNOTATION_KEY_VALUE=""
 IRSA_PA_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-pingaccess"
 IRSA_SS_ANNOTATION_KEY_VALUE="eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-self-service"
 # Used by cluster-tool pods
