@@ -5,9 +5,9 @@ metadata:
 data:
   health-check.sh: |
     #!/bin/sh
-    # Check if the OpenSearch cluster health is green
+    # Check if the OpenSearch cluster health is green or yellow
     cluster_health=$(curl -k https://opensearch-cluster-headless:9200/_cluster/health)
-    cluster_status=$(echo "$cluster_health" | jq -r '.status')  # Use jq to parse the JSON response
+    cluster_status=$(echo "$cluster_health" | jq -r '.status')
 
     if [ "$cluster_status" != "green"] && [ "$cluster_status" != "yellow"]; then
       echo "OpenSearch cluster is not green. Cluster status: $cluster_status"
