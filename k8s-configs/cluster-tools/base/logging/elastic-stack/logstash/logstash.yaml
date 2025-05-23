@@ -34,7 +34,7 @@ spec:
                         - logstash-elastic
                 topologyKey: "topology.kubernetes.io/zone"
       initContainers:
-        - name: wait-for-bootstrap-completed
+        - name: wait-for-os-health
           securityContext:
             runAsGroup: 2000
             runAsNonRoot: true
@@ -42,12 +42,39 @@ spec:
             allowPrivilegeEscalation: false
           image: public.ecr.aws/r2h3l6e4/pingcloud-services/toolkit:v1.22.0
           imagePullPolicy: IfNotPresent
+          env:
+          - name: OS_USER
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: os-logstash-creds
+          - name: OS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: os-logstash-creds
           command:
-            - sh
-            - '-c'
-            - >-
-              kubectl wait --for=condition=complete --timeout=900s -n
-              elastic-stack-logging job/opensearch-bootstrap
+          - sh
+          - -c
+          - |
+            # Check if the OpenSearch cluster health is green
+            cluster_health=$(curl -k https://opensearch-cluster-headless:9200/_cluster/health)
+            cluster_status=$(echo "$cluster_health" | jq -r '.status')  # Use jq to parse the JSON response
+
+            if [ "$cluster_status" != "green" ]; then
+              echo "OpenSearch cluster is not green. Cluster status: $cluster_status"
+              exit 1
+            fi
+
+            # Check if document(ID=1) exists in the 'bootstrap-status' index
+            final_status=$(curl -k -s -u $OS_USER:$OS_PASSWORD https://opensearch-cluster-headless:9200/bootstrap-status/_doc/1 | jq .)
+            doc_exists=$(curl -k -s -u $OS_USER:$OS_PASSWORD -o /dev/null -w "%{http_code}" https://opensearch-cluster-headless:9200/bootstrap-status/_doc/1)
+            if [ "$doc_exists" -ne 200 ]; then
+              echo "Document with ID '1' does not exist in the 'bootstrap-status' index, error: $doc_exists"
+              exit 1
+            fi
+            echo "OpenSearch cluster is healthy"
+            echo "$final_status"
         - name: create-enrichment-cache-files
           securityContext:
             runAsNonRoot: true
