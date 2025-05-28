@@ -15,7 +15,6 @@ data:
     fi
 
     # Check if document(ID=1) exists in the 'bootstrap-status' index
-    final_status=$(curl -k -s -u "$OS_USER:$OS_PASSWORD" https://opensearch-cluster-headless:9200/bootstrap-status/_doc/1 | jq .)
     doc_exists=$(curl -k -s -u "$OS_USER:$OS_PASSWORD" -o /dev/null -w "%{http_code}" https://opensearch-cluster-headless:9200/bootstrap-status/_doc/1)
     if [ "$doc_exists" -ne 200 ]; then
       echo "Document with ID '1' does not exist in the 'bootstrap-status' index, error: $doc_exists"
@@ -23,4 +22,4 @@ data:
     fi
 
     echo "OpenSearch cluster is healthy"
-    echo "$final_status"
+    echo "Bootstrap document exists"
