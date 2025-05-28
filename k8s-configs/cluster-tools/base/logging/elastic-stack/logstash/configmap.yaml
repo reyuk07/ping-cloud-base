@@ -9,7 +9,7 @@ data:
     cluster_health=$(curl -k https://opensearch-cluster-headless:9200/_cluster/health)
     cluster_status=$(echo "$cluster_health" | jq -r '.status')
 
-    if [ "$cluster_status" != "green"]; then
+    if [ "$cluster_status" != "green" ]; then
       echo "OpenSearch cluster is not green. Cluster status: $cluster_status"
       exit 1
     fi
