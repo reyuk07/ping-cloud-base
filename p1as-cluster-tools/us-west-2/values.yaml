@@ -34,7 +34,7 @@ ingress-nginx-public:
           runAsUser: 1000
         env:
           - name: AGENT_NAME
-            value: sigsci-agent
+            value: amehrotra-primary-dev-us-west-2
           - name: AWS_REGION
             value: us-west-2
           - name: ENVIRONMENT_PREFIX
