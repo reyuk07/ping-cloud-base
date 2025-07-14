@@ -25,7 +25,7 @@ spec:
     serviceName: opensearch
     serviceAccount: opensearch
     version: 2.19.0
-    image: public.ecr.aws/r2h3l6e4/amanopensearch:osupgrade-2.19.0
+    image: 705370621539.dkr.ecr.us-west-2.amazonaws.com/pingcloud-monitoring/opensearch:PDO-9950
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1000
@@ -94,7 +94,7 @@ spec:
     opensearchCredentialsSecret:
       name: opensearch-dashboard-credentials
     replicas: 1
-    image: public.ecr.aws/r2h3l6e4/amanopensearch@sha256:3d8ac9e71081e1a581daf0b79729c848f34ba794d4f48e91cccfb7ff9bf5fc92
+    image: public.ecr.aws/r2h3l6e4/pingcloud-clustertools/opensearchproject/opensearch-dashboards:2.19.0
     resources:
       requests:
          memory: "512Mi"
