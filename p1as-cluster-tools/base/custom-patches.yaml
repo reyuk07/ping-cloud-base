@@ -6,3 +6,19 @@ kind: ConfigMap
 metadata:
   name: cluster-tools-custom-placeholder-base
   namespace: ping-cloud
+
+---
+
+# Make ingress-ningx-private use a public load balancer for testing purposes
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx-private
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+    $patch: replace
+
+---
