@@ -306,9 +306,6 @@ spec:
             name: enrichment-cache
         - name: enrichment-cache-files
           emptyDir: {}
-        - name: health-check-script
-          configMap:
-            name: opensearch-health-check-script
         - name: os-notifications-channels
           configMap:
             name: os-notifications-channels
