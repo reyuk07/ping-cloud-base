@@ -149,6 +149,9 @@ spec:
         - name: dmesg
           mountPath: /var/log/dmesg
           readOnly: true
+        - mountPath: /var/log/container/shared-logs
+          name: shared-logs
+          readOnly: true
       terminationGracePeriodSeconds: 10
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -184,6 +187,9 @@ spec:
       - name: dmesg
         hostPath:
           path: /var/log/dmesg
+      - name: shared-logs
+        persistentVolumeClaim:
+          claimName: shared-logs-pvc
       serviceAccountName: fluent-bit
       priorityClassName: system-node-critical
       tolerations:

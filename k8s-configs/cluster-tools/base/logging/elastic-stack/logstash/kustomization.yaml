@@ -10,3 +10,4 @@ resources:
 - pdb.yaml
 - customer_pipelines
 - configmap.yaml
+- log-generator.yaml

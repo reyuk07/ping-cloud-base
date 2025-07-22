@@ -1,0 +1,169 @@
+---
+# Add PersistentVolumeClaim for shared logs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: shared-logs-pvc
+ namespace: elastic-stack-logging
+spec:
+ accessModes:
+   - ReadWriteOnce
+ resources:
+   requests:
+     storage: 1Gi
+ storageClassName: logstash-gp3
+
+
+# Log Generator Script
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: log-generator-script
+ namespace: elastic-stack-logging
+data:
+ generator.py: |
+   import os, json, time, argparse, random, threading
+   from datetime import datetime
+   from pathlib import Path
+   from prometheus_client import Counter, start_http_server
+
+
+   log_lines = Counter('log_generator_lines_total', 'Total log lines generated')
+   log_bytes = Counter('log_generator_bytes_total', 'Total log bytes generated')
+
+
+   def load_template(product):
+       with open(f"/templates/{product}.json", "r") as f:
+           return json.loads(f.read())
+
+
+   def generate_log(template):
+       now = datetime.utcnow().replace(microsecond=0).isoformat()
+       user_id = f"user{random.randint(1000,9999)}"
+       line = json.dumps({
+           k: v.replace("{{timestamp}}", now).replace("{{user_id}}", user_id)
+           if isinstance(v, str) else v
+           for k, v in template.items()
+       })
+       return line
+
+
+   def write_logs(product, rate, out_dir):
+       template = load_template(product)
+       target_file = Path(out_dir) / f"{product}.log"
+       per_log_interval = 1.0 / rate
+
+
+       with open(target_file, "a") as f:
+           while True:
+               log_line = generate_log(template)
+               f.write(log_line + "\n")
+               f.flush()
+               log_lines.inc()
+               log_bytes.inc(len(log_line) + 1)
+               time.sleep(per_log_interval)
+
+
+   if __name__ == "__main__":
+       parser = argparse.ArgumentParser()
+       parser.add_argument("--rate", type=int, default=100)
+       parser.add_argument("--products", type=str, default="pingfederate")
+       parser.add_argument("--log-dir", type=str, default="/shared-logs")
+       args = parser.parse_args()
+
+
+       os.makedirs(args.log_dir, exist_ok=True)
+       threading.Thread(target=start_http_server, args=(8080,), daemon=True).start()
+
+
+       products = [args.products] if args.products != "all" else ["pingfederate"]
+       for product in products:
+           threading.Thread(target=write_logs, args=(product, args.rate, args.log_dir), daemon=True).start()
+
+
+       while True:
+           time.sleep(60)
+
+
+# Log Template
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: log-template-pingfederate
+ namespace: elastic-stack-logging
+data:
+ pingfederate.json: |
+   {
+     "timestamp": "{{timestamp}}",
+     "level": "INFO",
+     "message": "User {{user_id}} authenticated successfully.",
+     "product": "pingfederate"
+   }
+
+
+# Log Generator Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: log-generator
+ namespace: elastic-stack-logging
+spec:
+ selector:
+   app: log-generator
+ ports:
+   - port: 8080
+     targetPort: 8080
+ type: ClusterIP
+
+
+# Log Generator Deployment
+---
+# Update Log Generator Deployment to use PVC
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: log-generator
+ namespace: elastic-stack-logging
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: log-generator
+ template:
+   metadata:
+     labels:
+       app: log-generator
+   spec:
+     containers:
+       - name: generator
+         image: python:3.10-slim
+         command:
+           - /bin/sh
+           - -c
+           - |
+             pip install prometheus_client && python /scripts/generator.py \
+               --rate=1000 \
+               --products=pingfederate \
+               --log-dir=/shared-logs
+         ports:
+           - containerPort: 8080
+         volumeMounts:
+           - name: generator-script
+             mountPath: /scripts
+           - name: templates
+             mountPath: /templates
+           - name: shared-logs
+             mountPath: /shared-logs
+     volumes:
+       - name: generator-script
+         configMap:
+           name: log-generator-script
+       - name: templates
+         configMap:
+           name: log-template-pingfederate
+       - name: shared-logs
+         persistentVolumeClaim:
+           claimName: shared-logs-pvc
