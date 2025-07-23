@@ -187,9 +187,10 @@ spec:
       - name: dmesg
         hostPath:
           path: /var/log/dmesg
-      - name: shared-logs
-        persistentVolumeClaim:
-          claimName: shared-logs-pvc
+      - hostPath:
+          path: /var/log/container/shared-logs
+          type: DirectoryOrCreate
+        name: shared-logs
       serviceAccountName: fluent-bit
       priorityClassName: system-node-critical
       tolerations:
