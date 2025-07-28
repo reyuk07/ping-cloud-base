@@ -19,7 +19,7 @@ class TestApplicationStatus(unittest.TestCase):
         pods = self.all_pods
         logstash_running = all(pod.status.phase == 'Running' for pod in pods if pod.metadata.name.startswith == 'logstash-elastic' )
         self.assertTrue(logstash_running, "logstash pod is not running")
-        os_url = os.getenv("OPENSEARCH_PUBLIC_HOSTNAME", f"https://logs.{os.environ.get('TENANT_DOMAIN', '')}")
+        os_url = os.getenv("OS_URL", "https://opensearch-cluster-headless:9200")
         index_url = f"{os_url}/bootstrap-status"
         auth = (os.getenv("BOOTSTRAP_USER", "admin"), os.getenv("BOOTSTRAP_PASS", "admin"))
         try:
