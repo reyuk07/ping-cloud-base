@@ -18,16 +18,3 @@ global:
 
   # irsaPingAnnotationKeyValue is the IAM roles for service accounts
   irsaPingAnnotationKeyValue: "eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ping-role"
-
-  # irsaBootstrapAnnotationKeyValue is the IAM roles for bootstrap service accounts
-  irsaBootstrapAnnotationKeyValue: ""
-
-  # Customer-specific artifacts URL for region
-  artifactRepoUrl: "s3://amehrotra-primary-pingbinary-bucket"
-
-  ########################################################
-  # Public Hostnames
-  ########################################################
-  pdHttpPublicHostname: "pingdirectory.amehrotra-primary.ping-demo.com"
-  pdDelegatorPublicHostname: "pingdelegator.amehrotra-primary.ping-demo.com"
-  pfEnginePublicHostname: "pingfederate.amehrotra-primary.ping-demo.com"
