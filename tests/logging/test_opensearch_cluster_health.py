@@ -52,5 +52,14 @@ class TestOpenSearchClusterHealth(unittest.TestCase):
         # Fail the test if the cluster status is not green
         self.assertEqual(cluster_status, "green", f"Cluster status is not green: {cluster_status}")
 
+    def test_bootstrap_status_index_exists(self):
+        # Check if bootstrap-status index exists in OpenSearch
+        exists = self.opensearch_client.indices.exists(index="bootstrap-status")
+        print(f"bootstrap-status index exists: {exists}")
+        self.assertTrue(
+            exists,
+            "bootstrap-status index does not exist in OpenSearch"
+        )
+
 if __name__ == '__main__':
     unittest.main()

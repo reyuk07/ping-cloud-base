@@ -19,19 +19,6 @@ class TestApplicationStatus(unittest.TestCase):
         pods = self.all_pods
         logstash_running = all(pod.status.phase == 'Running' for pod in pods if pod.metadata.name.startswith == 'logstash-elastic' )
         self.assertTrue(logstash_running, "logstash pod is not running")
-        bootstrap_user = os.getenv("BOOTSTRAP_USER", "admin")
-        bootstrap_pass = os.getenv("BOOTSTRAP_PASS", "admin")
-        os_url = os.getenv("OS_URL", "https://opensearch-cluster-headless:9200")
-        index_url = f"{os_url}/bootstrap-status"
-        curl_cmd = [
-        "curl", "-k", "-I",
-        "-u", f"{bootstrap_user}:{bootstrap_pass}",
-        index_url
-        ]
-
-        result = subprocess.run(curl_cmd, capture_output=True, text=True)
-        print(result.stdout)
-        self.assertIn("200", result.stdout, "bootstrap-status index does not exist in OpenSearch")
 
 
     def test_os_bootstrap_pod_running_or_completed(self):
