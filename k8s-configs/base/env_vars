@@ -51,6 +51,7 @@ PLATFORM_EVENT_QUEUE_NAME=amehrotra_primary_platform_event_queue.fifo
 PLATFORM_EVENT_QUEUE_POLL_BATCH_SIZE=1
 PLATFORM_EVENT_QUEUE_POLL_INTERVAL_SECONDS=2
 CUSTOMER_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/customer
+SELF_SERVICE_SSM_PATH_PREFIX=/pcpt/self-service
 CUSTOMER_SSO_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/customer/sso
 CUSTOMER_TLS_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/customer/tls
 SERVICE_SSM_PATH_PREFIX=/amehrotra-primary/pcpt/service
@@ -78,7 +79,7 @@ PING_CLOUD_NAMESPACE=ping-cloud
 
 # The ping-cloud-base git URL and branch for base Kubernetes manifests
 K8S_GIT_URL=https://github.com/reyuk07/ping-cloud-base.git
-K8S_GIT_BRANCH=v2.0-release-branch
+K8S_GIT_BRANCH=PDO-9972
 
 # The name of the Docker image registry
 ECR_REGISTRY_NAME=public.ecr.aws/r2h3l6e4
@@ -119,22 +120,6 @@ USER_BASE_DN_5=
 ECR_ENV=/dev
 
 ############################################################
-# PingFederate variables for environment
-############################################################
-PF_PD_BIND_PORT=1389
-PF_PD_BIND_PROTOCOL=ldap
-PF_PD_BIND_USESSL=false
-
-PF_MIN_HEAP=1536m
-PF_MAX_HEAP=1536m
-PF_MIN_YGEN=768m
-PF_MAX_YGEN=768m
-
-# This variable's value will make it onto the branding for the PF admin console and
-# will include the name of the environment and the region where it's deployed.
-PF_ADMIN_CONSOLE_ENVIRONMENT=${ENV}-${REGION}
-
-############################################################
 # PingAccess variables for environment
 ############################################################
 PA_WAS_MIN_HEAP=1024m
@@ -158,24 +143,23 @@ PING_IDENTITY_DEVOPS_KEY=e94a63f3-6d8c-1c0f-848f-2aa79ec482c0
 ############################################################
 # Ping application image tags
 ############################################################
-PINGACCESS_IMAGE_TAG=v2.0-release-branch-latest
-PINGACCESS_WAS_IMAGE_TAG=v2.0-release-branch-latest
-PINGFEDERATE_IMAGE_TAG=v2.0-release-branch-latest
-PINGDELEGATOR_IMAGE_TAG=v2.0-release-branch-latest
-PINGCENTRAL_IMAGE_TAG=v2.0-release-branch-latest
-PINGDATASYNC_IMAGE_TAG=v2.0-release-branch-latest
+PINGACCESS_IMAGE_TAG=v2.2-release-branch-latest
+PINGACCESS_WAS_IMAGE_TAG=v2.2-release-branch-latest
+PINGDELEGATOR_IMAGE_TAG=v2.2-release-branch-latest
+PINGCENTRAL_IMAGE_TAG=v2.2-release-branch-latest
+PINGDATASYNC_IMAGE_TAG=v2.2-release-branch-latest
 
 ############################################################
 # Ping solution image tags
 ############################################################
-BOOTSTRAP_IMAGE_TAG=v2.0-release-branch-latest
-P14C_INTEGRATION_IMAGE_TAG=v2.0-release-branch-latest
+BOOTSTRAP_IMAGE_TAG=v2.2-release-branch-latest
+P14C_INTEGRATION_IMAGE_TAG=v2.2-release-branch-latest
 
 ############################################################
 # Ping observability image tags
 ############################################################
-OS_BOOTSTRAP_IMAGE_TAG=v2.0-release-branch-latest
-LOGSTASH_IMAGE_TAG=v2.0-release-branch-latest
+OS_BOOTSTRAP_IMAGE_TAG=v2.2-release-branch-latest
+LOGSTASH_IMAGE_TAG=v2.2-release-branch-latest
 
 ############################################################
 # Cluster name variables
@@ -218,6 +202,7 @@ PROMETHEUS_PUBLIC_HOSTNAME=prometheus.${DNS_ZONE}
 GRAFANA_PUBLIC_HOSTNAME=monitoring.${DNS_ZONE}
 OSD_PUBLIC_HOSTNAME=logs.${DNS_ZONE}
 ARGOCD_PUBLIC_HOSTNAME=argocd.${DNS_ZONE}
+SELF_SERVICE_PUBLIC_HOSTNAME=self-service-api.${PRIMARY_DNS_ZONE}
 
 HEALTHCHECK_HTTPBIN_PA_WAS_PUBLIC_HOSTNAME=healthcheck-httpbin-pa-was.${PRIMARY_DNS_ZONE}
 HEALTHCHECK_HTTPBIN_PA_PUBLIC_HOSTNAME=healthcheck-httpbin-pa.${PRIMARY_DNS_ZONE}
@@ -247,8 +232,8 @@ PROMETHEUS_PING_NAMESPACE=ping-cloud
 PF_PROVISIONING_ENABLED=false
 
 RADIUS_PROXY_ENABLED=false
-# List of ping apps(pingaccess,pingaccess-was,pingdelegator,pingfederate) for which you can enable external ingress(the values are ping app names)Examplelist:(pingaccess pingaccess-was pingfederate)
-# Note pingdirectory external ingress is now controlled through the value `extIngressEnabled' in the 'p1as-pingdirectory/<region>/values.yaml' file.
+# List of ping apps(pingaccess,pingaccess-was,pingdelegator) for which you can enable external ingress(the values are ping app names)Examplelist:(pingaccess pingaccess-was)
+# Note pingdirectory & pingfederate external ingress is now controlled through the value 'ingress.enableExternalIngress' in the 'p1as-pingdirectory/<region>/values.yaml' & 'p1as-pingfederate/<region>/values.yaml file'.
 EXTERNAL_INGRESS_ENABLED=""
 
 # Runbook: https://pingidentity.atlassian.net/wiki/spaces/PDA/pages/427688292/How+to+Enable+and+Disable+Healthchecks+-+1.19.0
@@ -262,7 +247,7 @@ SLACK_CHANNEL=nowhere
 
 # Dashboards repo variables
 DASH_REPO_URL=https://github.com/pingidentity/ping-cloud-dashboards
-DASH_REPO_BRANCH=v2.0-dev-branch
+DASH_REPO_BRANCH=v2.2-dev-branch
 
 # Healthcheck variables
 CLUSTER_HEALTHCHECK_SCHEDULE="* * * * *"

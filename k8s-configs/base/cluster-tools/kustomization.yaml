@@ -5,9 +5,8 @@ resources:
 - git-ops
 - cert-manager
 - cluster-autoscaler
-- ebs-driver
 - service-discovery
-- ingress
+# - ingress
 - logging
 - metrics
 - monitoring
@@ -17,4 +16,3 @@ resources:
 - pgo
 - karpenter
 - kube-downscaler
-

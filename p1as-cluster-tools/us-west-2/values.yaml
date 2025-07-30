@@ -1,0 +1,48 @@
+# p1as-cluster-tools values
+
+# ingress-nginx-public values
+ingress-nginx-public:
+  ingress-nginx:
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ingress
+    controller:
+      service:
+        annotations:
+          
+      # Whole container needs to be defined here due to ingress-nginx helm templating
+      # See: https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/templates/controller-deployment.yaml#L180-L181
+      extraContainers:
+      - name: sigsci-agent
+        image: public.ecr.aws/r2h3l6e4/pingcloud-services/sigsci-agent/dev:v2.2-release-branch-latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 1Gi
+          requests:
+            cpu: 1200m
+            memory: 500Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: false
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        env:
+          - name: AGENT_NAME
+            value: amehrotra-primary-dev-us-west-2
+          - name: AWS_REGION
+            value: us-west-2
+          - name: ENVIRONMENT_PREFIX
+            value: amehrotra-primary-${REGION_ENV}-us-west-2
+        volumeMounts:
+          - mountPath: /var/run/
+            name: sigsci-socket
+
+# ingress-nginx-private values
+ingress-nginx-private:
+  ingress-nginx:
