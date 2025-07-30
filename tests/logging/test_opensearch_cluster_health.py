@@ -52,7 +52,18 @@ class TestOpenSearchClusterHealth(unittest.TestCase):
         # Fail the test if the cluster status is not green
         self.assertEqual(cluster_status, "green", f"Cluster status is not green: {cluster_status}")
 
-    def test_bootstrap_status_index_exists(self):
+
+    def test_logstash_pods_and_bootstrap_index(self):
+        # Check if logstash pods are running
+        pods = self.k8s.v1.list_namespaced_pod(namespace='elastic-stack-logging', watch=False).items
+        logstash_running = all(
+            pod.status.phase == 'Running'
+            for pod in pods
+            if pod.metadata.name.startswith('logstash-elastic')
+        )
+        print(f"Logstash pods running: {logstash_running}")
+        self.assertTrue(logstash_running, "logstash pod is not running")
+
         # Check if bootstrap-status index exists in OpenSearch
         exists = self.opensearch_client.indices.exists(index="bootstrap-status")
         print(f"bootstrap-status index exists: {exists}")
@@ -60,6 +71,15 @@ class TestOpenSearchClusterHealth(unittest.TestCase):
             exists,
             "bootstrap-status index does not exist in OpenSearch"
         )
+
+    # def test_bootstrap_status_index_exists(self):
+    #     # Check if bootstrap-status index exists in OpenSearch
+    #     exists = self.opensearch_client.indices.exists(index="bootstrap-status")
+    #     print(f"bootstrap-status index exists: {exists}")
+    #     self.assertTrue(
+    #         exists,
+    #         "bootstrap-status index does not exist in OpenSearch"
+    #     )
 
 if __name__ == '__main__':
     unittest.main()
