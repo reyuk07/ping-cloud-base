@@ -16,6 +16,3 @@ patchesStrategicMerge:
 
 ### PS/GSO customizations to OOTB resources should only go into this file. Otherwise, CSR auto-updates will break. ###
 - custom-patches.yaml
-
-components:
-- https://gitlab.corp.pingidentity.com/ping-cloud-base-patches//components/logging/opensearch_alert_rbac_patch_2_0?ref=PDO-9655
