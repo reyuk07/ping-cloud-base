@@ -133,7 +133,7 @@ global:
   pingCloudNamespace: "ping-cloud"
 
   # k8sGitBranch is the ping-cloud-base git branch for base Kubernetes manifests
-  k8sGitBranch: "PDO-9972"
+  k8sGitBranch: "v2.2-release-branch"
 
   # ecrRegistryName is the name of the Docker image registry
   ecrRegistryName: "public.ecr.aws/r2h3l6e4/dev"
