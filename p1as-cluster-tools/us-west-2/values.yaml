@@ -7,6 +7,10 @@ ingress-nginx-public:
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::705370621539:role/amehrotra-primary-irsa-ingress
     controller:
+      autoscaling:
+        minReplicas: 3
+        maxReplicas: 3
+        targetCPUUtilizationPercentage: 70
       service:
         annotations:
           
@@ -46,3 +50,8 @@ ingress-nginx-public:
 # ingress-nginx-private values
 ingress-nginx-private:
   ingress-nginx:
+    controller:
+      autoscaling:
+        minReplicas: 1
+        maxReplicas: 1
+        targetCPUUtilizationPercentage: 70
