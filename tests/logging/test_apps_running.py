@@ -1,7 +1,5 @@
-import os
 import unittest
 from kubernetes import client, config
-import subprocess
 
 class TestApplicationStatus(unittest.TestCase):
     @classmethod
