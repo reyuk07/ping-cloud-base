@@ -54,18 +54,21 @@ class TestOpenSearchClusterHealth(unittest.TestCase):
 
 
     def test_logstash_pods_and_bootstrap_index(self):
-        logstash_pod_names = self.k8s.get_deployment_pod_names(label="app=logstash-elastic", namespace="elastic-stack-logging")
-        logstash_running = False
-        # Check if any Logstash pod is running
-        for pod_name in logstash_pod_names:
-            pod = self.k8s.core_client.read_namespaced_pod_status(pod_name, "elastic-stack-logging")
-            if pod.status.phase == "Running":
-                logstash_running = True
-                break
-
-        print(f"Logstash pods running: {logstash_running}")
+        # logstash_pod_names = self.k8s.get_deployment_pod_names(label="app=logstash-elastic", namespace="elastic-stack-logging")
+        # logstash_running = False
+        # # Check if any Logstash pod is running
+        # for pod_name in logstash_pod_names:
+        #     pod = self.k8s.core_client.read_namespaced_pod_status(pod_name, "elastic-stack-logging")
+        #     if pod.status.phase == "Running":
+        #         logstash_running = True
+        #         break
+        print("Checking if Logstash pods are running...")
+        logstash_is_running = self.k8s.wait_for_pod_running(
+            label="app=logstash-elastic", namespace="elastic-stack-logging", timeout=120
+        )
+        print(f"Logstash pods running: {logstash_is_running}")
         # If logstash pods are running, bootstrap-status index should exist
-        if logstash_running:
+        if logstash_is_running:
             exists = self.opensearch_client.indices.exists(index="bootstrap-status")
             print(f"bootstrap-status index exists: {exists}")
             self.assertTrue(
