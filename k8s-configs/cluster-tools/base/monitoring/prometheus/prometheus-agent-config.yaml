@@ -49,6 +49,10 @@ data:
       - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
         action: keep
         regex: default;kubernetes;https
+      metric_relabel_configs:
+      - source_labels: [job]
+        regex: "apiserver_*"
+        action: drop
    
     - job_name: 'kubernetes-nodes'
       scheme: https
@@ -66,6 +70,10 @@ data:
         regex: (.+)
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics
+      metric_relabel_configs:
+      - source_labels: [job]
+        regex: "storage_operation_duration_seconds_*"
+        action: drop
 
     - job_name: 'opensearch-service'
       kubernetes_sd_configs:
