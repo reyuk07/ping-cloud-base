@@ -136,7 +136,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
-          "description": "JVM GC Old Gen (Tenured) Collected, %\\n\\nFormula: GC Old Gen (Tenured) Collection Usage Used / GC Old Gen (Tenured) Collection Usage Max * 100 ",
+          "description": "JVM GC Old Gen (Tenured) Collected, Formula: GC Old Gen (Tenured) Collection Usage Used / GC Old Gen (Tenured) Collection Usage Max * 100 ",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -236,6 +236,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This panel shows the 90th percentile of response time across all PingAccess servers in the selected cluster(s). This metric is derived from the `.response.time.statistics.90.percentile` metric collected from each PingAccess instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -330,6 +331,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This panel shows the mean response time across all PingAccess servers in the selected cluster(s).This metric is derived from the `.response.time.statistics.mean` metric collected from each PingAccess instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -423,6 +425,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This panel shows the 90th percentile of response concurrency across all PingAccess servers in the selected cluster(s).This metric is derived from the `.response.concurrency.statistics.90.percentile` metric collected from each PingAccess instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -516,6 +519,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This panel shows the mean of response concurrency across all PingAccess servers in the selected cluster(s).This metric is derived from the `.response.concurrency.statistics.mean` metric collected from each PingAccess instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -609,6 +613,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This panel shows the total number of requests across all PingAccess servers in the selected cluster(s).This metric is derived from the `.response.statistics.count` metric collected from each PingAccess instance.",
           "fieldConfig": {
             "defaults": {
               "color": {

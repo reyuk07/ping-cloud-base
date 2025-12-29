@@ -35,7 +35,20 @@ spec:
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
       "iteration": 1669984015792,
-      "links": [],
+      "links": [
+        {
+          "asDropdown": false,
+          "icon": "external link",
+          "includeVars": false,
+          "keepTime": false,
+          "tags": [],
+          "targetBlank": true,
+          "title": "PF Metric Doc Link",
+          "tooltip": "",
+          "type": "link",
+          "url": "https://docs.pingidentity.com/pingfederate/13.0/pingfederate_monitoring_guide/pf_liveliness_responsiveness.html#heartbeat-endpoint:~:text=and%20responsiveness.-,Server%20metrics,-Description"
+        }
+      ],
       "liveNow": false,
       "panels": [
         {
@@ -136,7 +149,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
-          "description": "JVM GC Old Gen (Tenured) Collected, %\\n\\nFormula: GC Old Gen (Tenured) Collection Usage Used / GC Old Gen (Tenured) Collection Usage Max * 100",
+          "description": "JVM GC Old Gen (Tenured) Collected, Formula: GC Old Gen (Tenured) Collection Usage Used / GC Old Gen (Tenured) Collection Usage Max * 100",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -236,6 +249,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `total.transactions` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -337,6 +351,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `total.failed.transactions` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -438,6 +453,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `response.time.statistics.mean` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -531,6 +547,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `response.time.statistics.90.percentile` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -624,6 +641,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `response.concurrency.statistics.mean` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -717,6 +735,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `response.concurrency.statistics.90.percentile` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -810,6 +829,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `session.state.attribute.map.size` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -903,6 +923,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `response.statistics.count` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1002,6 +1023,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `session.registry.session.map.size` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1095,6 +1117,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `idp.session.registry.session.map.size` metric collected from PingFederate instance.",
           "fieldConfig": {
             "defaults": {
               "color": {

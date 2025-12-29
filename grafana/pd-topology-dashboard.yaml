@@ -188,6 +188,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.throughput` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -281,6 +282,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.throughput` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -374,6 +376,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.response-time` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -467,6 +470,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.response-time` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -560,6 +564,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `*.*.*.garbage-collections` metric collected from PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -653,6 +658,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `^dc=(.*)_dc=(.*)\\.replica(.*)` metric collected from PingDirectory instance. For more details, see https://docs.pingidentity.com/pingdirectory/11.0/pingdirectory_server_administration_guide/pd_ds_summary_replica_monitor_info.html"
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -758,6 +764,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `*.backend-entry-count` metric collected from PingDirectory instance. For more details, see https://docs.pingidentity.com/pingdirectory/11.0/pingdirectory_server_administration_guide/pd_ds_monitor_soft_deletes.html",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -851,6 +858,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `*.garbage-collection-live-mbytes` metric collected from PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {

@@ -147,6 +147,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.throughput` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -240,6 +241,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.throughput` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -333,6 +335,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.response-time` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -429,6 +432,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric is derived from the `*.*.response-time` metric collected from each PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -522,6 +526,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `*.garbage-collection-live-mbytes` metric collected from PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -615,6 +620,7 @@ spec:
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "description": "This metric got transformed from `*.*.*.garbage-collections` metric collected from PingDirectory instance.",
           "fieldConfig": {
             "defaults": {
               "color": {
