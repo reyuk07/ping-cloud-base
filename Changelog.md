@@ -5,12 +5,14 @@
 - Upgrade cert-manager to version v1.19.1
 - Remove nri-kubernetes image reference
 - Update Security Contexts for external-dns namespace workloads
+- Enabled JSON for PA/PA-WAS/PF/PD
 
 _Changes:_
 
 - [X] PDO-10079 Upgrade cert-manager to version v1.19.1
 - [X] PDO-10486 Update Security Contexts for external-dns namespace workloads
 - [X] PDO-10546 NewRelic: Remove NRI Kubernetes Images from PCD
+- [X] PDO-10795 Enable JSON-Based Logging for PA / PF / PD / PA-WAS
 
 ### 2.2.0
 
