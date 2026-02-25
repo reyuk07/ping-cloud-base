@@ -14,8 +14,11 @@ def parse_output(output, pod):
 
 class TestLogstash(unittest.TestCase):
     namespace = "elastic-stack-logging"
-    logstash_pods = []
-    pipelines = ["main", "s3", "customer", "dlq"]
+    workload_pods = {}
+    workload_pipelines = {
+        "app=logstash-elastic": ["main", "customer", "dlq"],
+        "app=logstash-elastic-s3": ["s3", "dlq"],
+    }
     required_plugins = [
         "logstash-input-dead_letter_queue",
         "logstash-input-http",
@@ -34,14 +37,16 @@ class TestLogstash(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.k8s_utils = K8sUtils()
-        label = "app=logstash-elastic"
-        cls.logstash_pods = cls.k8s_utils.get_deployment_pod_names(label, cls.namespace)
-        if not cls.logstash_pods:
-            raise RuntimeError("No Logstash pods found in the namespace!")
-        print(f"Detected Logstash pods: {', '.join(cls.logstash_pods)}")
-        pods_ready = cls.k8s_utils.wait_for_all_pods_ready(label, cls.namespace)
-        if not pods_ready:
-            raise RuntimeError("Not all Logstash pods are ready.")
+        for label in cls.workload_pipelines:
+            pods = cls.k8s_utils.get_deployment_pod_names(label, cls.namespace)
+            if not pods:
+                raise RuntimeError(f"No Logstash pods found for label {label} in namespace {cls.namespace}.")
+            cls.workload_pods[label] = pods
+            print(f"Detected Logstash pods for {label}: {', '.join(pods)}")
+
+            pods_ready = cls.k8s_utils.wait_for_all_pods_ready(label, cls.namespace)
+            if not pods_ready:
+                raise RuntimeError(f"Not all Logstash pods are ready for label {label}.")
         print("All Logstash pods are running and containers are Ready.")
 
     def exec_in_logstash_container(self, pod_name, command):
@@ -64,13 +69,15 @@ class TestLogstash(unittest.TestCase):
         )
 
     def test_all_pipeline_statuses(self):
-        for pod in self.logstash_pods:
-            for pipeline_name in self.pipelines:
-                with self.subTest(pod=pod, pipeline=pipeline_name):
-                    self.check_pipeline_status(pod, pipeline_name)
+        for label, pipelines in self.workload_pipelines.items():
+            for pod in self.workload_pods[label]:
+                for pipeline_name in pipelines:
+                    with self.subTest(label=label, pod=pod, pipeline=pipeline_name):
+                        self.check_pipeline_status(pod, pipeline_name)
 
     def test_plugins_existence(self):
-        pod = self.logstash_pods[0]
+        first_label = next(iter(self.workload_pods))
+        pod = self.workload_pods[first_label][0]
         command = ["curl", "-s", "http://localhost:9600/_node/plugins?pretty"]
         output = self.exec_in_logstash_container(pod, command)
         plugins_json = parse_output(output, pod)

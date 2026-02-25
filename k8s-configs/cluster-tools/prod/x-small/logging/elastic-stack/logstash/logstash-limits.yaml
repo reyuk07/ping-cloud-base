@@ -19,6 +19,31 @@ spec:
             - name: LS_JAVA_OPTS
               value: '-Xms3g -Xmx3g'
             - name: PIPELINE_WORKERS
-              value: "16"
+              value: "6"
             - name: PIPELINE_BATCH_SIZE
-              value: "1500"
+              value: "500"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: logstash-elastic-s3
+  namespace: elastic-stack-logging
+spec:
+  template:
+    spec:
+      containers:
+        - name: logstash
+          resources:
+            limits:
+              cpu: "750m"
+              memory: 3Gi
+            requests:
+              cpu: "500m"
+              memory: 2Gi
+          env:
+            - name: LS_JAVA_OPTS
+              value: '-Xms1536m -Xmx1536m'
+            - name: PIPELINE_WORKERS
+              value: "8"
+            - name: PIPELINE_BATCH_SIZE
+              value: "1000"

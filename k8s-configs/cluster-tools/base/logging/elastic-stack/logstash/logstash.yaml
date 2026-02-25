@@ -1,4 +1,19 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pipeline
+data:
+  pipelines.yml: |
+    - pipeline.id: main
+      path.config: "/usr/share/logstash/pipeline/main"
+    - pipeline.id: customer
+      path.config: "/usr/share/logstash/pipeline/customer"
+    - pipeline.id: dlq
+      path.config: "/usr/share/logstash/pipeline/dlq"
+      pipeline.workers: 1
+
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -134,13 +149,13 @@ spec:
               cpu: "150m"
               memory: 100Mi
         - name: logstash
-          image: public.ecr.aws/r2h3l6e4/pingcloud-monitoring/logstash/dev:v2.3-release-branch-latest
+          image: 705370621539.dkr.ecr.us-west-2.amazonaws.com/pingcloud-monitoring/logstash:pdo-11091-logstash
           imagePullPolicy: Always
           command:
             - "/bin/sh"
           args:
             - "-c"
-            - "S3_BUCKET_NAME=${S3_BUCKET#s3://} /usr/local/bin/docker-entrypoint"
+            - "/usr/local/bin/docker-entrypoint"
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -158,7 +173,9 @@ spec:
             - name: LOG_FORMAT
               value: json
             - name: PIPELINE_BATCH_SIZE
-              value: '1000'
+              value: '500'
+            - name: PIPELINE_WORKERS
+              value: "2"
             - name: PIPELINE_ECS_COMPATIBILITY
               value: disabled
             - name: PIPELINE_ORDERED
@@ -187,11 +204,6 @@ spec:
                 secretKeyRef:
                   key: password
                   name: os-logstash-creds
-            - name: S3_BUCKET
-              valueFrom:
-                  configMapKeyRef:
-                    name: s3-raw-logs-bucket
-                    key: bucketName
             - name: AWS_REGION
               valueFrom:
                 configMapKeyRef:
@@ -245,13 +257,13 @@ spec:
             - containerPort: 8080
               name: http-log-input
               protocol: TCP
-            - containerPort: 8081
-              name: http-s3-input
-              protocol: TCP
             - containerPort: 8082
               name: http-cw-input
               protocol: TCP
           volumeMounts:
+            - name: logstash-pipelines
+              mountPath: /usr/share/logstash/config/pipelines.yml
+              subPath: pipelines.yml
             - name: logstash-pipeline-customer
               mountPath: /usr/share/logstash/pipeline/customer  
               readOnly: true
@@ -298,6 +310,12 @@ spec:
               memory: 100Mi
       terminationGracePeriodSeconds: 60
       volumes:
+        - name: logstash-pipelines
+          configMap:
+            name: pipeline
+            items:
+              - key: pipelines.yml
+                path: pipelines.yml
         - name: logstash-pipeline-customer
           configMap:
             name: logstash-pipeline-customer      
@@ -364,8 +382,6 @@ spec:
       name: http-main-input
     - port: 9198
       name: metrics
-    - port: 8081
-      name: http-s3-input
     - port: 8082
       name: http-cw-input
     - port: 8084
