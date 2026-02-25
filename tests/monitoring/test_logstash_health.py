@@ -57,15 +57,23 @@ class TestLogstash(unittest.TestCase):
             container_name="logstash"
         )
 
-    def check_pipeline_status(self, pod, pipeline_name):
+    def check_pipeline_status(self, label, pod, pipeline_name):
         command = ["curl", "-s", f"http://localhost:9600/_node/stats/pipelines/{pipeline_name}?pretty"]
         output = self.exec_in_logstash_container(pod, command)
         stats_json = parse_output(output, pod)
         pipeline_status = stats_json.get("status", "")
-        self.assertEqual(
+
+        expected_statuses = {"green"}
+        if label == "app=logstash-elastic-s3" and pipeline_name in {"s3", "dlq"}:
+            # On low/no traffic, Logstash may report 'unknown' for these pipelines.
+            expected_statuses.add("unknown")
+
+        self.assertIn(
             pipeline_status,
-            "green",
-            f"{pipeline_name.capitalize()} pipeline in pod {pod} is not in a healthy state. Status: {pipeline_status}"
+            expected_statuses,
+            f"{pipeline_name.capitalize()} pipeline in pod {pod} (label {label}) "
+            f"is not in a healthy state. Status: {pipeline_status}. "
+            f"Expected one of: {sorted(expected_statuses)}"
         )
 
     def test_all_pipeline_statuses(self):
@@ -73,7 +81,7 @@ class TestLogstash(unittest.TestCase):
             for pod in self.workload_pods[label]:
                 for pipeline_name in pipelines:
                     with self.subTest(label=label, pod=pod, pipeline=pipeline_name):
-                        self.check_pipeline_status(pod, pipeline_name)
+                        self.check_pipeline_status(label, pod, pipeline_name)
 
     def test_plugins_existence(self):
         first_label = next(iter(self.workload_pods))
