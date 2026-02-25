@@ -149,7 +149,7 @@ spec:
               cpu: "150m"
               memory: 100Mi
         - name: logstash
-          image: 705370621539.dkr.ecr.us-west-2.amazonaws.com/pingcloud-monitoring/logstash:pdo-11091-logstash
+          image: public.ecr.aws/r2h3l6e4/pingcloud-monitoring/logstash/dev:v2.3-release-branch-latest
           imagePullPolicy: Always
           command:
             - "/bin/sh"
@@ -173,9 +173,11 @@ spec:
             - name: LOG_FORMAT
               value: json
             - name: PIPELINE_BATCH_SIZE
+              # Base default; overridden by per-pipeline `pipeline.batch.size` in pipeline config.
               value: '500'
             - name: PIPELINE_WORKERS
-              value: "2"
+              # Base default; overridden by per-pipeline `pipeline.workers` in pipeline config.
+              value: "3"
             - name: PIPELINE_ECS_COMPATIBILITY
               value: disabled
             - name: PIPELINE_ORDERED
@@ -191,7 +193,8 @@ spec:
             - name: PATH_DEAD_LETTER_QUEUE
               value: "/usr/share/logstash/data/queue/dead_letter"
             - name: LS_JAVA_OPTS
-              value: "-Xms1g -Xmx1g"
+              # Heap/direct split sized for stable GC and IO buffer headroom.
+              value: "-Xms4g -Xmx4g -XX:MaxDirectMemorySize=2g"
             - name: XPACK_MONITORING_ENABLED
               value: "false"
             - name: OS_USER
@@ -244,12 +247,15 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5
           resources:
+            # Guaranteed QoS (requests = limits).
+            # Ensures dedicated CPU & Mem reservation for Logstash to avoid
+            # CPU throttling &noisy-neighbor interference
             limits:
-              cpu: "500m"
-              memory: 4Gi
+              cpu: "3"
+              memory: 9Gi
             requests:
-              cpu: "150m"
-              memory: 1Gi
+              cpu: "3"
+              memory: 9Gi
           ports:
             - containerPort: 9600
               name: rest
@@ -357,7 +363,7 @@ spec:
         storageClassName: logstash-gp3
         resources:
           requests:
-            storage: 50Gi
+            storage: 40Gi
 
 ---
 kind: Service

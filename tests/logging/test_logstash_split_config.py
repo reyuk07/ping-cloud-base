@@ -1,4 +1,5 @@
 import unittest
+import re
 from kubernetes import client, config
 
 
@@ -11,16 +12,21 @@ class TestLogstashSplitConfig(unittest.TestCase):
         cls.apps = client.AppsV1Api()
 
     def test_fluentbit_routing_outputs(self):
-        cm = self.core.read_namespaced_config_map(
-            name="fluent-bit-pipeline-outputs",
-            namespace=self.namespace
+        cms = self.core.list_namespaced_config_map(namespace=self.namespace).items
+        cm = next(
+            (item for item in cms if "fluent-bit-pipeline-outputs" in (item.metadata.name or "")),
+            None
+        )
+        self.assertIsNotNone(
+            cm,
+            "ConfigMap containing 'fluent-bit-pipeline-outputs' was not found"
         )
         conf = (cm.data or {}).get("pipeline-outputs.conf", "")
         self.assertTrue(conf, "pipeline-outputs.conf is missing in fluent-bit-pipeline-outputs ConfigMap")
 
         # S3 logs should be routed to dedicated S3 endpoint.
         self.assertIn("Alias               s3_app_out", conf)
-        self.assertIn("Host                logstash-elastic.s3-logging", conf)
+        self.assertIn("Host                logstash-elastic-s3.elastic-stack-logging", conf)
         self.assertIn("Port                8081", conf)
 
         # Main and customer should continue to route to existing logstash service.
@@ -39,17 +45,11 @@ class TestLogstashSplitConfig(unittest.TestCase):
         self.assertTrue(main_pipelines, "pipelines.yml missing in ConfigMap 'pipeline'")
         self.assertTrue(s3_pipelines, "pipelines.yml missing in ConfigMap 'pipeline-s3'")
 
-        # Main STS pipelines.
-        self.assertIn("pipeline.id: main", main_pipelines)
-        self.assertIn("pipeline.id: customer", main_pipelines)
-        self.assertIn("pipeline.id: dlq", main_pipelines)
-        self.assertNotIn("pipeline.id: s3", main_pipelines)
-
-        # S3 STS pipelines.
-        self.assertIn("pipeline.id: s3", s3_pipelines)
-        self.assertIn("pipeline.id: dlq", s3_pipelines)
-        self.assertNotIn("pipeline.id: main", s3_pipelines)
-        self.assertNotIn("pipeline.id: customer", s3_pipelines)
+        # Validate exact pipeline IDs per STS configmap.
+        main_ids = set(re.findall(r"pipeline\.id:\s*([a-zA-Z0-9_-]+)", main_pipelines))
+        s3_ids = set(re.findall(r"pipeline\.id:\s*([a-zA-Z0-9_-]+)", s3_pipelines))
+        self.assertSetEqual(main_ids, {"main", "customer", "dlq"})
+        self.assertSetEqual(s3_ids, {"s3"})
 
         # Validate corresponding STS mounts /usr/share/logstash/config/pipelines.yml with right ConfigMap.
         main_sts = self.apps.read_namespaced_stateful_set(name="logstash-elastic", namespace=self.namespace)
