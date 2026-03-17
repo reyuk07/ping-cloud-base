@@ -271,9 +271,17 @@ spec:
             timeoutSeconds: 5
           readinessProbe:
             failureThreshold: 10
-            httpGet:
-              path: /
-              port: 8080
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  EVENTS=$(curl -m 2 -s http://localhost:9600/_node/stats/pipelines | grep -o '"events_count":[0-9]*' | cut -d: -f2 | awk '{s+=$1} END {print s+0}')
+                  if [ "$EVENTS" -gt 5000 ]; then
+                    echo "Queue is too high ($EVENTS events). Tripping circuit breaker."
+                    exit 1
+                  fi
+                  exit 0
             initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 3
@@ -306,6 +314,25 @@ spec:
             - containerPort: 8082
               name: http-cw-input
               protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    echo "HPA triggered scale-down. Waiting for Persistent Queue to hit 0..."
+                    while true; do
+                      EVENTS=$(curl -s http://localhost:9600/_node/stats/pipelines | grep -o '"events_count":[0-9]*' | cut -d: -f2 | awk '{s+=$1} END {print s+0}')
+                      
+                      if [ "$EVENTS" -eq 0 ]; then
+                        echo "Queue is perfectly empty. Proceeding with graceful shutdown."
+                        break
+                      fi
+                      
+                      echo "Queue still has $EVENTS events. Waiting 5 seconds..."
+                      sleep 5
+                    done
           volumeMounts:
             - name: logstash-data
               mountPath: /usr/share/logstash/data
@@ -366,7 +393,7 @@ spec:
             requests:
               cpu: "150m"
               memory: 100Mi
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 600
       volumes:
         - name: logstash-data
           emptyDir: {}
