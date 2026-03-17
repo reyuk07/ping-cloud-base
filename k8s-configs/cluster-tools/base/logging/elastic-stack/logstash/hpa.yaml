@@ -20,12 +20,19 @@ spec:
       stabilizationWindowSeconds: 30
   maxReplicas: 2
   metrics:
-    - resource:
+    - type: Resource
+      resource:
         name: cpu
         target:
-          averageUtilization: 60
           type: Utilization
-      type: Resource
+          averageUtilization: 60
+    - type: Pods
+      pods:
+        metric:
+          name: logstash_queue_utilization_percent
+        target:
+          type: AverageValue
+          averageValue: "60"
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
@@ -55,12 +62,19 @@ spec:
       stabilizationWindowSeconds: 30
   maxReplicas: 2
   metrics:
-    - resource:
+    - type: Resource
+      resource:
         name: cpu
         target:
-          averageUtilization: 60
           type: Utilization
-      type: Resource
+          averageUtilization: 60
+    - type: Pods
+      pods:
+        metric:
+          name: logstash_queue_utilization_percent
+        target:
+          type: AverageValue
+          averageValue: "60"
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
