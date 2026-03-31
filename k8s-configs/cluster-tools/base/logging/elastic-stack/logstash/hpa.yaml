@@ -32,7 +32,15 @@ spec:
           name: logstash_queue_utilization_percent
         target:
           type: AverageValue
-          averageValue: "60"
+          averageValue: "40"
+  # Rate of Events coming to Logstash  
+    - type: Pods
+      pods:
+        metric:
+          name: logstash_events_in_rate
+        target:
+          type: AverageValue
+          averageValue: "5000"
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
