@@ -18,7 +18,7 @@ spec:
           value: 50
       selectPolicy: Max
       stabilizationWindowSeconds: 30
-  maxReplicas: 2
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
@@ -68,7 +68,7 @@ spec:
           value: 50
       selectPolicy: Max
       stabilizationWindowSeconds: 30
-  maxReplicas: 2
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
@@ -83,6 +83,13 @@ spec:
         target:
           type: AverageValue
           averageValue: "40"
+    - type: Pods
+      pods:
+        metric:
+          name: logstash_events_in_rate
+        target:
+          type: AverageValue
+          averageValue: "5000"
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
