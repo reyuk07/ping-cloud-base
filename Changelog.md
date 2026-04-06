@@ -35,6 +35,7 @@
 - Add support for NewRelic Prometheus to scrape OpenSearch metrics
 - Enhance prometheus and prometheus-agent integration, system test
 - Add patch to conditionally deploy logstash-elastic STS (customer pipeline) in customer-hub accounts
+- Implement Logstash HPA via custom metric
 
 _Changes:_
 
@@ -67,6 +68,7 @@ _Changes:_
 - [X] PDO-11091 Logstash: Implement  (Fluent Bit → 2x Logstash StatefulSets)
 - [X] PDO-11092 Grafana: Update Dashboards for (Fluent Bit → 2x Logstash)
 - [X] PDO-11104 Update p1as-beluga-lib and seal-secret-values to handle dynamic secrets
+- [X] PDO-11243 Prometheus-Adapter: Implement Logstash HPA via custom metric
 - [X] PDO-11307 Prometheus: Migrate job-exporter and json-exporter to ping-cloud-common repo
 - [X] PDO-11356 P14C_INTEGRATION_IMAGE_TAG not applied to pingaccess-p1as-sso image
 - [X] PDO-11340 Expose OpenSearch Metrics for Monitoring and Alerting on NewRelic
