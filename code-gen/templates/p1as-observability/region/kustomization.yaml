@@ -63,6 +63,9 @@ helmCharts:
     version: v2.3-release-branch-latest
     namespace: prometheus
     repo: oci://${ECR_REGISTRY_NAME}/dev
+    apiVersions:
+      - apiregistration.k8s.io/v1
+
 ### This field is used to trigger a resync of the helm chart ###
 configMapGenerator:
   - name: observability-last-update-reason
@@ -81,13 +84,3 @@ patchesStrategicMerge:
   - custom-patches.yaml
   - ../base/custom-patches.yaml
 
-patchesJson6902:
-  - target:
-      group: apiregistration.k8s.io
-      version: v1beta1
-      kind: APIService
-      name: v1beta1.custom.metrics.k8s.io
-    patch: |-
-      - op: replace
-        path: /apiVersion
-        value: apiregistration.k8s.io/v1
