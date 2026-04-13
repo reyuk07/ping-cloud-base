@@ -32,7 +32,7 @@ spec:
           name: logstash_queue_utilization_percent
         target:
           type: AverageValue
-          averageValue: "40"
+          averageValue: "20"
   # Rate of Events coming to Logstash  
     - type: Pods
       pods:
