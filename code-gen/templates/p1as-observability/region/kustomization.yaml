@@ -54,7 +54,6 @@ helmCharts:
     namespace: prometheus
     repo: oci://${ECR_REGISTRY_NAME}/dev
 
-
   - name: p1as-prometheus-adapter
     additionalValuesFiles:
       - ../../values-files/base/values.yaml   # base values.yaml
