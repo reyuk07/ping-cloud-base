@@ -306,12 +306,6 @@ spec:
             - containerPort: 8082
               name: http-cw-input
               protocol: TCP
-          lifecycle:
-            preStop:
-              exec:
-                command:
-                - /bin/sh
-                - /usr/local/bin/prestop-drain.sh
           volumeMounts:
             - name: logstash-data
               mountPath: /usr/share/logstash/data
