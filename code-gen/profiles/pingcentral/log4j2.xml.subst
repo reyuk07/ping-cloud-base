@@ -91,7 +91,7 @@
         <Console name="consolemonitor" target="SYSTEM_OUT">
           <JSONLayout  complete="false" compact="true" eventEol="true" objectMessageAsJsonObject="true" properties="true">
             <KeyValuePair key="timestamp" value="$${date:yyyy-MM-dd HH:mm:ss,S}" />
-            <KeyValuePair key="log_name" value="monior" />
+            <KeyValuePair key="log_name" value="monitor" />
           </JSONLayout>
         </Console>
 
